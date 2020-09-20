@@ -1,18 +1,23 @@
 class Stack {
   constructor() {
     this.data = [];
-    this.top = 0;
+    this.top = -1;
   }
   push(element) {
-    this.data[this.top] = element;
-    this.top++;
+    this.data[++this.top] = element;
   }
   pop() {
     if (this.isEmpty()) {
       return console.log('Nothing to pop');
     }
-    this.top = this.top - 1;
+    --this.top;
     return this.data.pop();
+  }
+  peek() {
+    if (this.isEmpty()) {
+      return console.log('Empty stack');
+    }
+    return this.data[this.top];
   }
   isEmpty() {
     // is it an array and does it have any elements
@@ -20,6 +25,9 @@ class Stack {
       return false;
     }
     return true;
+  }
+  length() {
+    return this.data.length;
   }
   print() {
     let log = 'top -> ';
@@ -60,20 +68,20 @@ class Queue {
   }
 }
 
-class NodeOneWay {
+class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
   }
 }
 
-class LinkedListOneWay {
+class LinkedList {
   constructor() {
     this.head = null;
     this.size = 0;
   }
-  add(element) {
-    const node = new NodeOneWay(element);
+  add(value) {
+    const node = new Node(value);
     if (this.head === null) {
       this.head = node;
     } else {
@@ -88,13 +96,36 @@ class LinkedListOneWay {
     // increment size
     this.size++;
   }
+  insertAtIndex(value, index) {
+    if (index > this.size || index < 0) {
+      return console.log('Invalid index');
+    }
+    const node = new Node(value);
+    if (index === 0) {
+      node.next = this.head;
+      this.head = node;
+    } else {
+      let currentNode = this.head;
+      let previousNode = null;
+      let i = 0;
+      while (i < index) {
+        previousNode = currentNode;
+        currentNode = currentNode.next;
+        i++;
+      }
+      // arrived at the index, time to insert
+      node.next = currentNode;
+      previousNode.next = node;
+    }
+    this.size++;
+  }
   removeFromIndex(index) {
     if (index > this.size || index < 0) {
       return console.log('Invalid index');
     }
     let i = 0;
     let currentNode = this.head;
-    let previousNode;
+    let previousNode = null;
 
     // detach head if index is 0
     if (index === 0) {
@@ -117,6 +148,49 @@ class LinkedListOneWay {
     previousNode.next = currentNode.next;
     this.size--;
     return currentNode.value;
+  }
+
+  // removes first element in the list if their value matches the passed one
+  // if the second arg is passed, it will remove that number of matches
+  removeByValue(value) {
+    let currentNode = this.head;
+    let previousNode = null;
+
+    while (currentNode) {
+      // if matching value has been found
+      if (currentNode.value === value) {
+        // case where it's a head node
+        if (previousNode === null) {
+          this.head = currentNode.next;
+          // case if it's in the middle of a list
+        } else {
+          previousNode.next = currentNode.next;
+        }
+        this.size--;
+        return currentNode.value;
+      }
+      // traverse
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+    }
+    return console.log('No node matches the given value');
+  }
+  indexOf(value) {
+    let i = 0;
+    let currentNode = this.head;
+
+    while (currentNode) {
+      if (currentNode.value === value) {
+        return i;
+      }
+      currentNode = currentNode.next;
+      i++;
+    }
+    return console.log('No node matches the given value');
+  }
+  // size not allowed as a function name D:
+  sizeOfList() {
+    return this.size;
   }
   isEmpty() {
     if (this.size === 0) {
