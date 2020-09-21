@@ -11,30 +11,28 @@ class SinglyLinkedList {
   getSize() {
     return this.size;
   }
-  // adds the node to the end list
-  add(value) {
-    const node = new Node(value);
-    if (this.head === null) {
-      this.head = node;
-    } else {
-      let currentNode = this.head;
-      // traverse the list
-      while (currentNode.next) {
-        currentNode = currentNode.next;
-      }
-      // next points to our new element in the list
-      currentNode.next = node;
-    }
-    this.size++;
-  }
-  insertAtIndex(value, index) {
+  // if index not provided insert at the end of the list
+  add(value, index = this.size) {
     if (index > this.size || index < 0) {
       return console.log('Invalid index');
     }
     const node = new Node(value);
+    // node to be inserted at the beginning
     if (index === 0) {
       node.next = this.head;
       this.head = node;
+      // node to be inserted at the end
+    } else if (index === this.size) {
+      if (this.head === null) {
+        this.head = node;
+      } else {
+        let currentNode = this.head;
+        while (currentNode.next) {
+          currentNode = currentNode.next;
+        }
+        currentNode.next = node;
+      }
+      // somewhere in between
     } else {
       let currentNode = this.head;
       let previousNode = null;
@@ -50,7 +48,7 @@ class SinglyLinkedList {
     }
     this.size++;
   }
-  removeFromIndex(index) {
+  removeByIndex(index) {
     if (index > this.size || index < 0) {
       return console.log('Invalid index');
     }

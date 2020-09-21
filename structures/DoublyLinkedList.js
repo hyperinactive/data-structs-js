@@ -15,25 +15,8 @@ class DoublyLinkedList {
   getSize() {
     return this.size;
   }
-  add(value) {
-    const node = new Node(value);
-    if (this.head === null) {
-      this.head = node;
-    } else {
-      let currentNode = this.head;
-      while (currentNode.next) {
-        currentNode = currentNode.next;
-      }
-
-      // set the list's tail and node's prev
-      currentNode.next = node;
-      node.prev = currentNode;
-      this.tail = node;
-    }
-    this.size++;
-  }
-  insertAtIndex(value, index) {
-    if (index >= this.size || index < 0) {
+  add(value, index = this.size) {
+    if (index > this.size || index < 0) {
       return console.log('Invalid index');
     }
     const node = new Node(value);
@@ -41,10 +24,20 @@ class DoublyLinkedList {
       node.next = this.head;
       this.head = node;
       this.tail = node;
-    }
-    // invoke add if the index is the last item in the list
-    else if (index === this.size - 1) {
-      this.add(node.value);
+    } else if (index === this.size) {
+      if (this.head === null) {
+        this.head = node;
+      } else {
+        let currentNode = this.head;
+        while (currentNode.next) {
+          currentNode = currentNode.next;
+        }
+
+        // set the list's tail and node's prev
+        currentNode.next = node;
+        node.prev = currentNode;
+        this.tail = node;
+      }
     }
     // else insert between
     else {
