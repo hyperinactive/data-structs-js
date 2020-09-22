@@ -1,4 +1,4 @@
-import Node from './Node.js';
+import { Node } from './Node.js';
 
 class DoublyLinkedList {
   constructor() {
@@ -138,4 +138,4 @@ class DoublyLinkedList {
   }
 }
 
-export default DoublyLinkedList;
+export { DoublyLinkedList };

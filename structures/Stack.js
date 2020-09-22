@@ -63,4 +63,4 @@ class Stack {
   }
 }
 
-export default Stack;
+export {Stack};

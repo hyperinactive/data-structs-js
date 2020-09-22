@@ -1,4 +1,4 @@
-import Node from './Node.js';
+import { Node } from './Node.js';
 
 class SinglyLinkedList {
   constructor() {
@@ -186,4 +186,4 @@ class SinglyLinkedList {
   }
 }
 
-export default SinglyLinkedList;
+export { SinglyLinkedList };

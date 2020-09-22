@@ -9,4 +9,4 @@ class BSTNode {
   }
 }
 
-export default BSTNode;
+export { BSTNode };
