@@ -11,7 +11,7 @@ class Queue {
     }
     return this.data.shift();
   }
-  front() {
+  peek() {
     if (this.isEmpty()) {
       return 'Queue has no elements';
     }
@@ -22,6 +22,9 @@ class Queue {
       return false;
     }
     return true;
+  }
+  size() {
+    return this.data.length;
   }
   print() {
     let log = '';
