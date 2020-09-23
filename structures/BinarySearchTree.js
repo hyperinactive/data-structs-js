@@ -1,6 +1,15 @@
 import { BSTNode } from './BSTNode.js';
 import { Queue } from './Queue.js';
 
+const TRAVERSAL = {
+  DFS: {
+    INORDER: 'inorder',
+    PREORDER: 'preorder',
+    POSTORDER: 'postorder',
+  },
+  BFS: 'bfs',
+};
+
 const insertNode = (currentNode, node) => {
   if (currentNode.value > node.value) {
     if (currentNode.left === null) {
@@ -96,19 +105,37 @@ class BinarySearchTree {
     // invoke the remove fn
     this.root = removeNode(this.root, value);
   }
-  getDepth(node = this.root) {
-    if (node === null) {
-      return 0;
-    }
-    let leftSubDepth = this.getDepth(node.left);
-    let rightSubDepth = this.getDepth(node.right);
+  getDepth(value = this.root.value) {
+    const getDepthBST = (node = this.root) => {
+      if (node === null) {
+        return 0;
+      }
+      let leftSubDepth = getDepthBST(node.left);
+      let rightSubDepth = getDepthBST(node.right);
 
-    if (leftSubDepth > rightSubDepth) {
-      return leftSubDepth + 1;
+      if (leftSubDepth > rightSubDepth) {
+        return leftSubDepth + 1;
+      }
+      return rightSubDepth + 1;
+    };
+    /**
+     * if a value is given, find the node that matches it
+     * calculate the depth of the subtree based on the found node
+     * else calculate for the root
+     */
+    if (value !== this.root.value) {
+      const node = this.find(value);
+      return getDepthBST(node);
     }
-    return rightSubDepth + 1;
+    return getDepthBST();
   }
-  getHeight(node = this.root) {
+  getHeight(value = this.root.value) {
+    let node;
+    if (value !== this.root.value) {
+      node = this.find(value);
+    } else {
+      node = this.root;
+    }
     // tree is empty
     if (node === null) {
       return 0;
@@ -118,35 +145,35 @@ class BinarySearchTree {
     queue.enqueue(node);
 
     /**
-    * idea - get all nodes of each level
-    * enqueue nodes and check for their children
-    * repeat till no nodes are left
-    */
+     * idea - get all nodes of each level
+     * enqueue nodes and check for their children
+     * repeat till no nodes are left
+     */
     while (1) {
       let nodeCount = queue.size();
       if (nodeCount === 0) {
         return height;
       }
       height++;
-      
+
       while (nodeCount > 0) {
         let newNode = queue.peek();
         queue.dequeue();
         if (newNode.left !== null) {
-          queue.enqueue(newNode.left)
+          queue.enqueue(newNode.left);
         }
         if (newNode.right !== null) {
-          queue.enqueue(newNode.right)
+          queue.enqueue(newNode.right);
         }
         nodeCount--;
       }
     }
   }
-  // print using DFTs
-  print(method = 'inorder', currentNode = this.root) {
+  // default print BFS -> optional DFS
+  print(method = 'bfs', currentNode = this.root) {
     switch (method) {
       // left sub -> root -> right sub
-      case 'inorder':
+      case TRAVERSAL.DFS.INORDER:
         if (currentNode === null) {
           return;
         }
@@ -155,7 +182,7 @@ class BinarySearchTree {
         this.print(method, currentNode.right);
         break;
       // root -> left sub -> right sub
-      case 'preorder':
+      case TRAVERSAL.DFS.PREORDER:
         if (currentNode === null) {
           return;
         }
@@ -165,7 +192,7 @@ class BinarySearchTree {
         break;
 
       // left sub -> right sub -> root
-      case 'postorder':
+      case TRAVERSAL.DFS.POSTORDER:
         if (currentNode === null) {
           return;
         }
@@ -173,7 +200,66 @@ class BinarySearchTree {
         this.print(method, currentNode.right);
         console.log(currentNode.value);
         break;
+      // BFS
+      case TRAVERSAL.BFS:
+        if (currentNode === null) {
+          return;
+        }
+        // init queue, enqueue the root node
+        let queue = new Queue();
+        queue.enqueue(currentNode);
+
+        /**
+         * for every node in the queue print its value
+         * look for node's children in the left sub
+         * enqueue them
+         * look for node's children in the right sub
+         * enqueue them
+         */
+        while (!queue.isEmpty()) {
+          let node = queue.peek();
+          console.log(node.value);
+          queue.dequeue();
+
+          if (node.left !== null) {
+            queue.enqueue(node.left);
+          }
+          if (node.right !== null) {
+            queue.enqueue(node.right);
+          }
+        }
+        break;
     }
+  }
+  clone(value = this.root.value) {
+    let currentNode;
+    // if an optional value has been passed, find the matching node
+    if (value !== this.root.value) {
+      currentNode = this.find(value);
+    } else {
+      currentNode = this.root;
+    }
+    if (currentNode === null) {
+      return;
+    }
+    let newTree = new BinarySearchTree();
+
+    let queue = new Queue();
+    queue.enqueue(currentNode);
+
+    while (!queue.isEmpty()) {
+      let node = queue.peek();
+      newTree.insert(node.value);
+      queue.dequeue();
+
+      if (node.left !== null) {
+        queue.enqueue(node.left);
+      }
+      if (node.right !== null) {
+        queue.enqueue(node.right);
+      }
+    }
+    return newTree;
   }
   find(value) {
     return findNode(this.root, value);
