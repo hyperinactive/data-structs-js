@@ -26,6 +26,13 @@ class Queue {
   size() {
     return this.data.length;
   }
+  clone() {
+    let newQueue = new Queue();
+    this.data.forEach((element) => {
+      newQueue.data.push(element);
+    });
+    return newQueue;
+  }
   print() {
     let log = '';
     this.data.forEach((element) => {

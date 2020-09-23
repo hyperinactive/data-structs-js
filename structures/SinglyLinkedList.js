@@ -171,6 +171,13 @@ class SinglyLinkedList {
     }
     return false;
   }
+  clone() {
+    let newList = new SinglyLinkedList();
+    this.forEach((element) => {
+      newList.add(element.value);
+    });
+    return newList;
+  }
   print() {
     let currentNode = this.head;
     let log = 'head -> ';

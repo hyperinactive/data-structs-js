@@ -53,6 +53,13 @@ class Stack {
   length() {
     return this.data.length;
   }
+  clone() {
+    let newStack = new Stack();
+    this.data.forEach((element) => {
+      newStack.push(element);
+    });
+    return newStack;
+  }
   print() {
     let log = 'top -> ';
     for (let i = this.data.length - 1; i >= 0; i--) {
@@ -63,4 +70,4 @@ class Stack {
   }
 }
 
-export {Stack};
+export { Stack };

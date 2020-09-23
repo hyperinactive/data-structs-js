@@ -123,6 +123,13 @@ class DoublyLinkedList {
     }
     return false;
   }
+  clone() {
+    let newList = new DoublyLinkedList();
+    this.forEach((element) => {
+      newList.add(element.value);
+    });
+    return newList;
+  }
   print() {
     let currentNode = this.head;
     let log = 'head -> ';

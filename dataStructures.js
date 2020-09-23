@@ -5,3 +5,4 @@ export { SinglyLinkedList } from './structures/SinglyLinkedList.js';
 export { DoublyLinkedList } from './structures/DoublyLinkedList.js';
 export { BSTNode } from './structures/BSTNode.js';
 export { BinarySearchTree } from './structures/BinarySearchTree.js';
+export { HashMap } from './structures/HashMap.js';
