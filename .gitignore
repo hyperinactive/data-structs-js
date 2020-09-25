@@ -6,6 +6,4 @@ index.html
 test.js
 
 # temp tests
-HashMapTest.js
-linearHashing.js
-reHashTest.js
+HashSetTest.js
