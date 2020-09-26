@@ -1,14 +1,13 @@
-// hash a string
-const hashStringCode = (s, setSize, prime) => {
-  let hash = prime;
-  for (let i = 0; i < s.length; i++) {
-    hash = (prime - hash * s.charCodeAt(i)) % setSize;
-  }
-  return hash;
-};
-
 // hash used for finding a key based on set's size
 const hashFirst = (value, setSize) => {
+  if (typeof value === 'string') {
+    let stringValue = 0;
+    for (let i = 0; i < value.length; i++) {
+      stringValue = stringValue + value.charCodeAt(i);
+    }
+    let hashKey = stringValue % setSize;
+    return hashKey;
+  }
   let hashKey = value % setSize;
   return hashKey;
 };
@@ -16,6 +15,15 @@ const hashFirst = (value, setSize) => {
 // hash used if the collision happens
 const hashSecond = (value, setSize) => {
   const prime = findPrimeLesserThan(setSize);
+  if (typeof value === 'string') {
+    let stringValue = 0;
+    for (let i = 0; i < value.length; i++) {
+      stringValue = stringValue + value.charCodeAt(i);
+    }
+    let hashKey = prime - (stringValue % prime);
+    return hashKey;
+  }
+
   let hashKey = prime - (value % prime);
   return hashKey;
 };
@@ -51,7 +59,7 @@ const findPrimeLesserThan = (n) => {
 };
 
 class HashTable {
-  constructor(loadFactor = 0.75, setSize = 13) {
+  constructor(setSize = 13, loadFactor = 0.75) {
     // todo some error handling would be nice
     this.bucket = new Array(setSize);
     this.numOfElements = 0;
@@ -59,56 +67,37 @@ class HashTable {
     this.load = loadFactor;
   }
   put(value) {
-    if (typeof value === 'number') {
-      let key = hashFirst(value, this.bucket.length);
-      let i = 0;
-      while (1) {
-        // found open space -> add
-        // check if resizing and rehashing is needed
-        if (this.bucket[key] === undefined) {
-          this.bucket[key] = value;
-          this.numOfElements++;
-          this.updateLoad();
-          return;
-        }
-        key = hashCollision(
-          hashFirst(value, this.bucket.length),
-          hashSecond(value, this.bucket.length),
-          this.bucket.length,
-          i++
-        );
-      }
-      this.numOfElements++;
+    let key = hashFirst(value, this.bucket.length);
+    let i = 0;
+    while (1) {
+      // found open space -> add
       // check if resizing and rehashing is needed
-      this.updateLoad();
-    } else if (typeof value === 'string') {
-      
+      if (this.bucket[key] === undefined) {
+        this.bucket[key] = value;
+        this.numOfElements++;
+        this.updateLoad();
+        return;
+      }
+      key = hashCollision(
+        hashFirst(value, this.bucket.length),
+        hashSecond(value, this.bucket.length),
+        this.bucket.length,
+        i++
+      );
     }
+    this.numOfElements++;
+    // check if resizing and rehashing is needed
+    this.updateLoad();
   }
   get(key) {
     return this.bucket[key];
   }
-  remove(value) {
-    if (this.bucket.includes(value)) {
-      // find the key
-      let key = hashFirst(value, this.bucket.length);
-      let i = 0;
-      while (1) {
-        if (this.bucket[key] === value) {
-          this.bucket[key] = undefined;
-          this.numOfElements--;
-          return true;
-        }
-        key = hashCollision(
-          hashFirst(value, this.bucket.length),
-          hashSecond(value, this.bucket.length),
-          this.bucket.length,
-          i++
-        );
-      }
-    } else {
+  remove(key) {
+    if (this.bucket[key] === undefined) {
       return false;
     }
+    this.bucket[key] === undefined;
+    return true;
   }
   updateLoad() {
     if (this.numOfElements / this.bucket.length >= this.load) {
@@ -131,6 +120,42 @@ class HashTable {
       return console.log('Load factor exceeded');
     }
     return;
+  }
+  union(table) {
+    if (!table instanceof HashTable) {
+      throw new TypeError("Passed argument isn't a HashTable");
+    }
+    table.bucket.forEach((element) => {
+      this.put(element);
+    });
+    return this;
+  }
+  getCurrentLoad() {
+    return this.numOfElements / this.getSize();
+  }
+  getSize() {
+    return this.bucket.length;
+  }
+  forEach(callback) {
+    if (this.bucket.numOfElements === 0) {
+      return console.log('This table is empty');
+    }
+    if (typeof callback !== 'function') {
+      throw new TypeError("Passed argument isn't a function");
+    }
+    this.bucket.forEach((element) => {
+      const bindFn = callback.bind(element);
+      bindFn(element);
+    });
+    return this;
+  }
+  clone() {
+    // make new table, copy the elements and it's properties, return the new table
+    let newHashTable = new HashTable(this.bucket.length);
+    newHashTable.numOfElements = this.numOfElements;
+    // newHashTable.bucket = [...this.bucket];
+    newHashTable.bucket = this.bucket.slice();
+    return newHashTable;
   }
   printSet() {
     let log = '[key][value]=> ';
