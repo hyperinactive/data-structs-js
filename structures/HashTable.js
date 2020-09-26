@@ -60,7 +60,12 @@ const findPrimeLesserThan = (n) => {
 
 class HashTable {
   constructor(setSize = 13, loadFactor = 0.75) {
-    // todo some error handling would be nice
+    if (!(typeof setSize === 'number' || typeof loadFactor === 'number')) {
+      throw new TypeError('HashTable expects numbers as arguments');
+    }
+    if (loadFactor >= 1) {
+      throw new RangeError('Load factor cannot be >= 1');
+    }
     this.bucket = new Array(setSize);
     this.numOfElements = 0;
     this.hashCollisionPrime = findPrimeLesserThan(this.bucket.length);
@@ -75,8 +80,8 @@ class HashTable {
       if (this.bucket[key] === undefined) {
         this.bucket[key] = value;
         this.numOfElements++;
-        this.updateLoad();
-        return;
+        this.update();
+        return true;
       }
       key = hashCollision(
         hashFirst(value, this.bucket.length),
@@ -87,7 +92,7 @@ class HashTable {
     }
     this.numOfElements++;
     // check if resizing and rehashing is needed
-    this.updateLoad();
+    this.update();
   }
   get(key) {
     return this.bucket[key];
@@ -99,7 +104,7 @@ class HashTable {
     this.bucket[key] === undefined;
     return true;
   }
-  updateLoad() {
+  update() {
     if (this.numOfElements / this.bucket.length >= this.load) {
       // if the load factor has been exceeded resize the set and rehash the elements
       let arr = [];

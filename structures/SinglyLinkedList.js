@@ -115,7 +115,8 @@ class SinglyLinkedList {
       currentNode = currentNode.next;
       i++;
     }
-    return console.log('No node matches the given value');
+    // console.log('No node matches the given value')
+    return -1;
   }
   forEach(callback) {
     if (this.isEmpty()) {

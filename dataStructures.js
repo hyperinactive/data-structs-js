@@ -6,3 +6,4 @@ export { DoublyLinkedList } from './structures/DoublyLinkedList.js';
 export { BSTNode } from './structures/BSTNode.js';
 export { BinarySearchTree } from './structures/BinarySearchTree.js';
 export { HashTable } from './structures/HashTable.js';
+export { HashMap } from './structures/HashMap.js';
