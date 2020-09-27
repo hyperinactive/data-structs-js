@@ -1,6 +1,6 @@
 {
   "name": "data-structs-js",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Implementation of common data structures into Javascript",
   "main": "app.js",
   "scripts": {

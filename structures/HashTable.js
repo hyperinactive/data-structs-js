@@ -67,7 +67,7 @@ class HashTable {
       throw new RangeError('Load factor cannot be >= 1');
     }
     this.bucket = new Array(setSize);
-    this.numOfElements = 0;
+    this.elementCount = 0;
     this.hashCollisionPrime = findPrimeLesserThan(this.bucket.length);
     this.load = loadFactor;
   }
@@ -79,7 +79,7 @@ class HashTable {
       // check if resizing and rehashing is needed
       if (this.bucket[key] === undefined) {
         this.bucket[key] = value;
-        this.numOfElements++;
+        this.elementCount++;
         this.update();
         return true;
       }
@@ -90,7 +90,7 @@ class HashTable {
         i++
       );
     }
-    this.numOfElements++;
+    this.elementCount++;
     // check if resizing and rehashing is needed
     this.update();
   }
@@ -105,10 +105,10 @@ class HashTable {
     return true;
   }
   update() {
-    if (this.numOfElements / this.bucket.length >= this.load) {
+    if (this.elementCount / this.bucket.length >= this.load) {
       // if the load factor has been exceeded resize the set and rehash the elements
       let arr = [];
-      this.numOfElements = 0;
+      this.elementCount = 0;
       // store elements of the current set
       // forEach will skip any undefined element when invoked
       this.bucket.forEach((element) => {
@@ -136,7 +136,7 @@ class HashTable {
     return this;
   }
   getCurrentLoad() {
-    return this.numOfElements / this.getSize();
+    return this.elementCount / this.getSize();
   }
   getSize() {
     return this.bucket.length;
@@ -157,7 +157,7 @@ class HashTable {
   clone() {
     // make new table, copy the elements and it's properties, return the new table
     let newHashTable = new HashTable(this.bucket.length);
-    newHashTable.numOfElements = this.numOfElements;
+    newHashTable.elementCount = this.elementCount;
     // newHashTable.bucket = [...this.bucket];
     newHashTable.bucket = this.bucket.slice();
     return newHashTable;
