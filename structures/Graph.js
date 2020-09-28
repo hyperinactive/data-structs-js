@@ -1,3 +1,5 @@
+import { Queue } from './Queue.js';
+
 class Graph {
   constructor() {
     this.vertices = new Map();
@@ -67,6 +69,55 @@ class Graph {
     });
     return;
   }
+  /**
+   * traverse the graph using the breadth first search algh
+   * store the vertices and mark them as unvisited
+   * start from the source vertex
+   * check its edges for new vertices
+   * enqueue the found vertices (if unvisited) and dequeue the current vertex
+   * repeat for each vertex in the graph
+   */
+
+  // (?) todo - greater weight, greater prio?
+  // todo - enable functions to work with bfs
+  bfs(source) {
+    if (!this.vertices.has(source)) {
+      throw new TypeError('No node matches the given source');
+    }
+    let visited = new Map();
+    let vertexKeysIterator = this.vertices.keys();
+    // console.log(vertexKeysIterator);
+    // for of -> so much cleaner than converting iterator into array omg...
+    // todo refactor conversions of iterators into for of loops
+    for (let iterator of vertexKeysIterator) {
+      visited.set(iterator, false);
+    }
+    // console.log('Visited');
+    // console.log(visited);
+    let queue = new Queue();
+
+    visited.set(source, true);
+    queue.enqueue(source);
+
+    while (!queue.isEmpty()) {
+      console.log(source);
+      queue.dequeue();
+
+      // console.log(source);
+      let keysIterator = this.edges.get(source).keys();
+
+      for (const iterator of keysIterator) {
+        if (visited.get(iterator) !== true) {
+          // console.log('You\'re not visited ' + iterator);
+          // console.log(`Adding ${iterator} to queue: `);
+          visited.set(iterator, true);
+          queue.enqueue(iterator);
+          // console.log(queue);
+        }
+      }
+      source = queue.peek();
+    }
+  }
   print() {
     if (this.vertexCount === 0) {
       return console.log('The graph is empty');
@@ -100,7 +151,7 @@ class Graph {
       edgesKey.forEach((el) => {
         log += `${el}, `;
       });
-      // remove the extra ',' from the log string
+      // remove the extra ', ' from the log string
       log = log.substring(0, log.length - 2);
       return console.log(log);
     });
