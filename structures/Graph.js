@@ -56,14 +56,54 @@ class Graph {
       console.log('No vertices removed');
       return 0;
     }
+    // use the iterator to get the keys of starting vertices
     let keysIterator = this.edges.get(fromKey).keys();
-    console.log(keysIterator);
+    // console.log(keysIterator);
+    // convert the iterator to an array
     let keys = Array.from(keysIterator);
     console.log(keys);
-    keys.forEach(toKey => {
+    keys.forEach((toKey) => {
       this.removeEdge(fromKey, toKey);
-    })
+    });
     return;
+  }
+  print() {
+    if (this.vertexCount === 0) {
+      return console.log('The graph is empty');
+    }
+
+    /**
+     * iterate over the this.edges -> get all vertices with their edges
+     * if there are no edges in the map return the the key of the vertex
+     * iterate over all edges verts have
+     * return the log string
+     */
+
+    console.log('Graph: ');
+    // this.edges contains all vertices regardless of them (not) having edges
+    // keys of all vertices
+    let vertexKeysIterator = this.edges.keys();
+    let vertexKey = Array.from(vertexKeysIterator);
+    // console.log(vertexKey);
+    // console.log('Print the edges');
+    vertexKey.forEach((element) => {
+      let log = '';
+      log += element;
+      if (this.edges.get(element).size === 0) {
+        console.log(log);
+        return;
+      }
+      let edgesKeyIterator = this.edges.get(element).keys();
+      let edgesKey = Array.from(edgesKeyIterator);
+      // console.log(edgesKey);
+      log += ` -> `;
+      edgesKey.forEach((el) => {
+        log += `${el}, `;
+      });
+      // remove the extra ',' from the log string
+      log = log.substring(0, log.length - 2);
+      return console.log(log);
+    });
   }
 }
 
