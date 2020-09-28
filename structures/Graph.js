@@ -79,11 +79,14 @@ class Graph {
    */
 
   // (?) todo - greater weight, greater prio?
-  // todo - enable functions to work with bfs
-  bfs(source) {
+  bfs(source, callback = () => {}) {
     if (!this.vertices.has(source)) {
       throw new TypeError('No node matches the given source');
     }
+    if (typeof callback !== 'function') {
+      throw new TypeError('BFS expects a function');
+    }
+    // make a list of unvisited vertices
     let visited = new Map();
     let vertexKeysIterator = this.vertices.keys();
     // console.log(vertexKeysIterator);
@@ -100,7 +103,9 @@ class Graph {
     queue.enqueue(source);
 
     while (!queue.isEmpty()) {
-      console.log(source);
+      // console.log(source);
+      const bindFn = callback.bind(source);
+      bindFn(source);
       queue.dequeue();
 
       // console.log(source);
@@ -117,6 +122,45 @@ class Graph {
       }
       source = queue.peek();
     }
+  }
+  /**
+   * search as far as the edges go
+   * with every node call the function to search further
+   * when done with the node mark it as visited
+  */
+  dfs(source, callback = () => {}) {
+    // make a list of unvisited vertices
+    let visited = new Map();
+    let vertexKeysIterator = this.vertices.keys();
+    for (let iterator of vertexKeysIterator) {
+      visited.set(iterator, false);
+    }
+
+    const dfsRec = (source, visited) => {
+      visited.set(source, true);
+      // console.log(source);
+      const bindFn = callback.bind(source);
+      bindFn(source);
+
+      let keysIterator = this.edges.get(source).keys();
+
+      for (const iterator of keysIterator) { 
+        if (visited.get(iterator) !== true) { 
+          dfsRec(iterator, visited);
+        }
+      }
+    }
+    dfsRec(source, visited);
+  }
+  printDFS(source) {
+    this.dfs(source, (element) => {
+      console.log(element);
+    })
+  }
+  printBFS(source) {
+    this.bfs(source, (element) => {
+      console.log(element);
+    })
   }
   print() {
     if (this.vertexCount === 0) {
