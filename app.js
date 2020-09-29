@@ -6,7 +6,10 @@ import {
   DoublyLinkedList,
   BSTNode,
   BinarySearchTree,
-  HashTable
+  HashTable,
+  HashMap,
+  Graph,
+  AVLTree
 } from './dataStructures.js';
 
 // import * as datastructs from './dataStructures.js';

@@ -7,5 +7,5 @@ export { BSTNode } from './structures/BSTNode.js';
 export { BinarySearchTree } from './structures/BinarySearchTree.js';
 export { HashTable } from './structures/HashTable.js';
 export { HashMap } from './structures/HashMap.js';
-export { Vertex } from './structures/Vertex.js';
 export { Graph } from './structures/Graph.js';
+export { AVLTree } from './structures/AVLTree.js';

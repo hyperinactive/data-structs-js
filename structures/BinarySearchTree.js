@@ -14,12 +14,14 @@ const insertNode = (currentNode, node) => {
   if (currentNode.value > node.value) {
     if (currentNode.left === null) {
       currentNode.left = node;
+      node.parent = currentNode;
     } else {
       insertNode(currentNode.left, node);
     }
   } else {
     if (currentNode.right === null) {
       currentNode.right = node;
+      node.parent = currentNode;
     } else {
       insertNode(currentNode.right, node);
     }
@@ -130,44 +132,17 @@ class BinarySearchTree {
     return getDepthBST();
   }
   getHeight(value = this.root.value) {
-    let node;
-    if (value !== this.root.value) {
-      node = this.find(value);
-    } else {
-      node = this.root;
-    }
-    // tree is empty
-    if (node === null) {
-      return 0;
-    }
-    let height = 0;
-    let queue = new Queue();
-    queue.enqueue(node);
-
-    /**
-     * idea - get all nodes of each level
-     * enqueue nodes and check for their children
-     * repeat till no nodes are left
-     */
-    while (1) {
-      let nodeCount = queue.size();
-      if (nodeCount === 0) {
-        return height;
+    let node = this.find(value);
+    const getHeightRec = (node) => {
+      let height = 0;
+      if (!node) {
+        height = 0;
+      } else {
+        height = Math.max(getHeightRec(node.left), getHeightRec(node.right)) + 1;
       }
-      height++;
-
-      while (nodeCount > 0) {
-        let newNode = queue.peek();
-        queue.dequeue();
-        if (newNode.left !== null) {
-          queue.enqueue(newNode.left);
-        }
-        if (newNode.right !== null) {
-          queue.enqueue(newNode.right);
-        }
-        nodeCount--;
-      }
-    }
+      return height;
+    };
+    return getHeightRec(node);
   }
   // default print BFS -> optional DFS
   print(method = 'bfs', currentNode = this.root) {
