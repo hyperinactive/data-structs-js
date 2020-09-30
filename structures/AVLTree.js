@@ -10,39 +10,58 @@ class AVLTree extends BinarySearchTree {
     let currentNode = super.find(value);
 
     // balance the tree
+    let i = 0;
     while (currentNode) {
+      console.log('Current node in the tree reverse search for balance');
+      console.log(currentNode);
+      console.log('And his parent');
+      console.log(currentNode.parent);
       this.balance(currentNode);
       currentNode = currentNode.parent;
+      if (i === 100) {
+        console.log('broke');
+        break;
+      }
+      i++;
     }
   }
   // subtraction of left and right subtrees' heights
   getBalanceFactor(node) {
-    return super.getHeight(node.left) - super.getHeight(node.right);
+    // console.log(`called for node:  + ${node.value}`);
+    let lHeight = 0;
+    if (node.left) {
+      lHeight = super.getHeight(node.left.value);  
+    }
+    let rHeight = 0;
+    if (node.right) {
+      rHeight = super.getHeight(node.right.value);  
+    }
+    return lHeight - rHeight;
   }
   balance(node) {
     // left rotation 1 and 2 - balance greater than 1
     if (this.getBalanceFactor(node) > 1) {
-      console.log('Do left rotation');
+      // console.log('Do left rotation');
       if (this.getBalanceFactor(node.left) > 0) {
         // left-left rotation
-        console.log('Left left scenario');
+        // console.log('Left left scenario');
         this.rotateLeftLeft(node);
         // left-right rotation
       } else if (this.getBalanceFactor(node.left) < 0) {
-        console.log('Left right scenario');
+        // console.log('Left right scenario');
         this.rotateLeftRight(node);
       }
     }
     // right rotation 3 and 4 - balance less than -1
     else if (this.getBalanceFactor(node) < -1) {
-      console.log('Do right rotation');
+     //  console.log('Do right rotation');
       if (this.getBalanceFactor(node.right) < 0) {
         // right right rotation
-        console.log('Right right rotation');
+        // console.log('Right right rotation');
         this.rotateRightRight(node);
       } else if (this.getBalanceFactor(node.right) > 0) {
         // right left rotation
-        console.log('Right left rotattion');
+        // console.log('Right left rotattion');
         this.rotateRightLeft(node);
       }
     }
@@ -53,13 +72,14 @@ class AVLTree extends BinarySearchTree {
    * if the left child had a right subtree attach the sub to the parent node
    */
   rotateRight(node) {
+    console.log('rotating right for the node ' + node.value);
     const tmpLeftNode = node.left;
     node.left = null;
 
     // check for a parent
     if (node.parent) {
-      tmpLeftNode.parent = node.parent.parent;
-      node.parent = tmpLeftNode;
+      tmpLeftNode.parent = node.parent;
+      node.parent.left = tmpLeftNode;
       // if the root itself is to be rotated
     } else {
       this.root = tmpLeftNode;
@@ -74,15 +94,18 @@ class AVLTree extends BinarySearchTree {
     // switch the rotating nodes
     node.parent = tmpLeftNode;
     tmpLeftNode.right = node;
+    // console.log('called from rotate right -----------------------------------------------------');
+    super.print();
   }
   // inverse of rotateRight
   rotateLeft(node) {
+    console.log('rotating left for the node ' + node.value);
     const tmpRightNode = node.right;
     node.right = null;
 
     if (node.parent) {
-      tmpRightNode.parent = node.parent.parent;
-      node.parent = tmpRightNode;
+      tmpRightNode.parent = node.parent;
+      node.parent.right = tmpRightNode;
     } else {
       this.root = tmpRightNode;
       tmpRightNode.parent = this.root;
