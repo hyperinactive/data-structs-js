@@ -1,9 +1,11 @@
 # todo list
 todo.txt
+todoDocumentation.txt
 
 # testing files
 index.html
 test.js
 
 # temp tests
-HashSetTest.js
+AVLTreeTest.js
+AVLTreeCopy.js
