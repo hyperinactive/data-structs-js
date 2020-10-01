@@ -9,7 +9,8 @@ import {
   HashTable,
   HashMap,
   Graph,
-  AVLTree
+  AVLTree,
+  MinHeap
 } from './dataStructures.js';
 
 // import * as datastructs from './dataStructures.js';

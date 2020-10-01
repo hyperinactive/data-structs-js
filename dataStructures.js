@@ -9,3 +9,4 @@ export { HashTable } from './structures/HashTable.js';
 export { HashMap } from './structures/HashMap.js';
 export { Graph } from './structures/Graph.js';
 export { AVLTree } from './structures/AVLTree.js';
+export { MinHeap } from './structures/MinHeap.js';
