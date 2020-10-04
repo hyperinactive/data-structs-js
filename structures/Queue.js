@@ -7,15 +7,24 @@ class Queue {
   }
   dequeue() {
     if (this.isEmpty()) {
-      return console.log('Nothing to dequeue');
+      console.log('Queue has no elements')
+      return null;
     }
     return this.data.shift();
   }
   peek() {
     if (this.isEmpty()) {
-      return 'Queue has no elements';
+      console.log('Queue has no elements');
+      return null;
     }
     return this.data[0];
+  }
+  poll() {
+    if (this.isEmpty()) {
+      console.log('Queue has no elements');
+      return null;
+    }
+    return this.dequeue();
   }
   isEmpty() {
     if (this.data.length !== 0) {

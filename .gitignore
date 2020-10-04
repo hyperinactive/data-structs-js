@@ -5,7 +5,3 @@ todoDocumentation.txt
 # testing files
 index.html
 test.js
-
-# temp tests
-AVLTreeTest.js
-AVLTreeCopy.js

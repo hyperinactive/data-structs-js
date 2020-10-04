@@ -4,32 +4,13 @@ class Heap {
     this.nodeCount = 0;
     this.maxSize = size;
   }
-  insert(node) {
-    // if there is no more room in the heap
-    if (this.getSize() >= this.maxSize) {
-      return;
-    }
-    // if the heap is empty or the root node is greater than the new one -> insert at the beginning
-    if (this.getSize() === 0) {
-      this.heap.push(node);
-      this.nodeCount++;
-      return;
-    }
-    
-    // push the node at the end of the array
-    this.heap.push(node);
-    // get the index of the last element in the array
-    let currentNode = this.getSize();
-    
-    // move up the list of parents and swap with each that has greater value than the new one
-    while (this.heap[currentNode] < this.heap[this.getParent(currentNode)]) {
-      this.swap(currentNode, this.getParent(currentNode));
-      currentNode = this.getParent(currentNode);
-    }
-    this.nodeCount++;
-  }
-
   // utilities
+  peek() {
+    if (this.nodeCount === 0) {
+      return null;
+    }
+    return this.heap[0];
+  }
   getSize() {
     return this.nodeCount;
   }
@@ -53,6 +34,13 @@ class Heap {
     let tmp = this.heap[x];
     this.heap[x] = this.heap[y];
     this.heap[y] = tmp;
+  }
+  print() {
+    let log = '';
+    for (const node of this.heap) {
+      log += `[${node}], `
+    }
+    return console.log(log.slice(0, log.length - 2));;
   }
 }
 
