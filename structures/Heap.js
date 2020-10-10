@@ -29,11 +29,13 @@ class Heap {
     return index >= this.getSize() / 2 && index <= this.getSize();
   }
   swap(x, y) {
-    console.log(`X: ${x}`);
-    console.log(`Y: ${y}`);
     let tmp = this.heap[x];
     this.heap[x] = this.heap[y];
     this.heap[y] = tmp;
+  }
+  clear() {
+    this.heap = new Array();
+    this.nodeCount = 0;
   }
   print() {
     let log = '';

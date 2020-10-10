@@ -7,8 +7,10 @@ class Graph {
     this.vertexCount = 0;
     this.edgeCount = 0;
   }
-  // todo error handling
-  // todo input flexibility
+  /**
+   * @param {*} key
+   * @param {*} value
+   */
   addVertex(key, value) {
     // make a vertex and its edges
     // const vertex = new Vertex(value); // kind of works without Vertex, keep the class (?)
@@ -18,14 +20,21 @@ class Graph {
     this.vertexCount++;
     return value;
   }
-  // todo error handling
-  // todo input flexibility
-  // assuming the vertices exist, add them to the map
-  addEdge(fromVertex, toVertex, weight) {
+  /**
+   *
+   * @param {*} fromVertex key of a vertex from which the edge starts
+   * @param {*} toVertex key of a vertex to which the edge ends
+   * @param {number} weight
+   * assuming the vertices exist, add them to the map
+   */
+  addEdge(fromVertex, toVertex, weight = 1) {
     // edge has key of the start vertex and value of its weight
     this.edges.get(fromVertex).set(toVertex, weight);
     this.edgeCount++;
   }
+  /**
+   * @returns {boolean} if a vertex has been removed or not
+   */
   removeVertex(key) {
     if (!this.vertices.has(key)) {
       console.log('No vertices match the key');
@@ -37,6 +46,9 @@ class Graph {
     this.vertexCount--;
     return true;
   }
+  /**
+   * @returns {boolean} if an edge has been removed or not
+   */
   removeEdge(fromVertex, toVertex) {
     // if the vertices exist
     if (
@@ -53,6 +65,9 @@ class Graph {
     console.log('No edges match the args provided');
     return false;
   }
+  /**
+   * @returns {number} number of edges removed 
+   */
   removeAllEdges(fromKey) {
     if (!this.vertices.has(fromKey)) {
       console.log('No vertices removed');
@@ -60,14 +75,13 @@ class Graph {
     }
     // use the iterator to get the keys of starting vertices
     let keysIterator = this.edges.get(fromKey).keys();
-    // console.log(keysIterator);
-    // convert the iterator to an array
     let keys = Array.from(keysIterator);
-    console.log(keys);
+    let i = 0;
     keys.forEach((toKey) => {
       this.removeEdge(fromKey, toKey);
+      i++;
     });
-    return;
+    return i;
   }
   /**
    * traverse the graph using the breadth first search algh
@@ -76,9 +90,11 @@ class Graph {
    * check its edges for new vertices
    * enqueue the found vertices (if unvisited) and dequeue the current vertex
    * repeat for each vertex in the graph
+   * 
+   * @param {*} source a vertex from which the bfs starts off
+   * @param {function} callback a function to be called for each vertex
    */
 
-  // (?) todo - greater weight, greater prio?
   bfs(source, callback = () => {}) {
     if (!this.vertices.has(source)) {
       throw new TypeError('No node matches the given source');
@@ -127,7 +143,10 @@ class Graph {
    * search as far as the edges go
    * with every node call the function to search further
    * when done with the node mark it as visited
-  */
+   * 
+   * @param {*} source a vertex from which the bfs starts off
+   * @param {function} callback a function to be called for each vertex
+   */
   dfs(source, callback = () => {}) {
     // make a list of unvisited vertices
     let visited = new Map();
@@ -138,29 +157,34 @@ class Graph {
 
     const dfsRec = (source, visited) => {
       visited.set(source, true);
-      // console.log(source);
       const bindFn = callback.bind(source);
       bindFn(source);
 
       let keysIterator = this.edges.get(source).keys();
 
-      for (const iterator of keysIterator) { 
-        if (visited.get(iterator) !== true) { 
+      for (const iterator of keysIterator) {
+        if (visited.get(iterator) !== true) {
           dfsRec(iterator, visited);
         }
       }
-    }
+    };
     dfsRec(source, visited);
   }
+  /**
+   * @param {*} source 
+   */
   printDFS(source) {
     this.dfs(source, (element) => {
       console.log(element);
-    })
+    });
   }
+  /**
+   * @param {*} source 
+   */
   printBFS(source) {
     this.bfs(source, (element) => {
       console.log(element);
-    })
+    });
   }
   print() {
     if (this.vertexCount === 0) {

@@ -11,6 +11,10 @@ class SinglyLinkedList {
   getSize() {
     return this.size;
   }
+  /**
+   * @param {*} value 
+   * @param {number} index 
+   */
   // if index not provided insert at the end of the list
   add(value, index = this.size) {
     if (index > this.size || index < 0) {
@@ -48,6 +52,9 @@ class SinglyLinkedList {
     }
     this.size++;
   }
+  /**
+   * @param {number} index 
+   */
   removeByIndex(index) {
     if (index > this.size || index < 0) {
       return console.log('Invalid index');
@@ -79,6 +86,10 @@ class SinglyLinkedList {
     return currentNode.value;
   }
 
+  /**
+   * @param {*} value
+   * @returns {(*|null)} returns the value of the removed item 
+   */
   // removes first element in the list if their value matches the passed one
   // if the second arg is passed, it will remove that number of matches
   removeByValue(value) {
@@ -102,8 +113,13 @@ class SinglyLinkedList {
       previousNode = currentNode;
       currentNode = currentNode.next;
     }
-    return console.log('No node matches the given value');
+    console.log('No node matches the given value');
+    return null;
   }
+  /**
+   * @param {*} value
+   * @returns {number} returns index of a given value 
+   */
   indexOf(value) {
     let i = 0;
     let currentNode = this.head;
@@ -118,6 +134,9 @@ class SinglyLinkedList {
     // console.log('No node matches the given value')
     return -1;
   }
+  /**
+   * @param {function} callback 
+   */
   forEach(callback) {
     if (this.isEmpty()) {
       return console.log('The list is empty');
@@ -140,7 +159,7 @@ class SinglyLinkedList {
     this.head = null;
     this.size = 0;
   }
-  // wish it was doubly linked list now T_T
+  // reverses the list
   reverse() {
     let reverseArr = [];
     let currentNode = this.head;
@@ -166,6 +185,9 @@ class SinglyLinkedList {
         currentNode = node;
       });
   }
+  /**
+   *  @returns {boolean}  
+   */
   isEmpty() {
     if (this.size === 0) {
       return true;

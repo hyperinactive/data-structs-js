@@ -15,6 +15,10 @@ class DoublyLinkedList {
   getSize() {
     return this.size;
   }
+  /**
+   * @param {*} value
+   * @param {number} index
+   */
   add(value, index = this.size) {
     if (index > this.size || index < 0) {
       return console.log('Invalid index');
@@ -57,6 +61,11 @@ class DoublyLinkedList {
     }
     this.size++;
   }
+  /**
+   *
+   * @param {number} value
+   * @returns {(number|null)} value of the removed node
+   */
   removeByValue(value) {
     let currentNode = this.head;
     let previousNode = null;
@@ -80,8 +89,13 @@ class DoublyLinkedList {
       previousNode = currentNode;
       currentNode = currentNode.next;
     }
-    return console.log('No node matches the given value');
+    console.log('No node matches the given value');
+    return null;
   }
+  /**
+   * @param {number} value
+   * @returns {number} index of a value in the list 
+   */
   indexOf(value) {
     let i = 0;
     let currentNode = this.head;
@@ -93,8 +107,12 @@ class DoublyLinkedList {
       currentNode = currentNode.next;
       i++;
     }
-    return console.log('No node matches the given value');
+    console.log('No node matches the given value');
+    return -1;
   }
+  /**
+   * @param {function} callback 
+   */
   forEach(callback) {
     if (this.isEmpty()) {
       return console.log('The list is empty');
@@ -116,6 +134,7 @@ class DoublyLinkedList {
     this.head = null;
     this.tail = null;
     this.size = 0;
+    return this;
   }
   isEmpty() {
     if (this.size === 0) {
