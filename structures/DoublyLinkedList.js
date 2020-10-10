@@ -136,12 +136,18 @@ class DoublyLinkedList {
     this.size = 0;
     return this;
   }
+  /**
+   * @returns {boolean}
+   */
   isEmpty() {
     if (this.size === 0) {
       return true;
     }
     return false;
   }
+  /**
+   * @returns {DoublyLinkedList} returns a close of the list
+   */
   clone() {
     let newList = new DoublyLinkedList();
     this.forEach((element) => {

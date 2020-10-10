@@ -2,6 +2,9 @@ import { BinarySearchTree } from './BinarySearchTree.js';
 
 // use the already made functions from the BST
 class AVLTree extends BinarySearchTree {
+  /**
+   * @param {number} value 
+   */
   insert(value) {
     // call the supclass insert
     super.insert(value);
@@ -16,13 +19,20 @@ class AVLTree extends BinarySearchTree {
       currentNode = currentNode.parent;
     }
   }
+  /**
+   * @param {number} value 
+   * @returns {?Node}
+   */
   remove(value) {
     super.remove(value);
     this.balance(this.root);
   }
-  // subtraction of left and right subtrees' heights
+  /**
+   * subtraction of left and right subtrees' heights
+   * @param {Node} node
+   * @returns {number} 
+   */
   getBalanceFactor(node) {
-    // console.log(`called for node:  + ${node.value}`);
     let lHeight = 0;
     if (node.left) {
       lHeight = super.getHeight(node.left.value);
@@ -33,6 +43,9 @@ class AVLTree extends BinarySearchTree {
     }
     return lHeight - rHeight;
   }
+  /**
+   * @param {Node} node 
+   */
   balance(node) {
     // left rotation 1 and 2 - balance greater than 1
     if (this.getBalanceFactor(node) > 1) {
@@ -59,6 +72,7 @@ class AVLTree extends BinarySearchTree {
    * right rotation
    * switch parent node with its left child
    * if the left child had a right subtree attach the sub to the parent node
+   * @param {Node} node 
    */
   rotateRight(node) {
     const tmpLeftNode = node.left;
@@ -84,7 +98,10 @@ class AVLTree extends BinarySearchTree {
     node.parent = tmpLeftNode;
     tmpLeftNode.right = node;
   }
-  // inverse of rotateRight
+  /**
+   * inverse of rotateRight
+   * @param {Node} node 
+   */
   rotateLeft(node) {
     const tmpRightNode = node.right;
     node.right = null;

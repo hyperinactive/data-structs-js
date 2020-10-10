@@ -88,7 +88,7 @@ class SinglyLinkedList {
 
   /**
    * @param {*} value
-   * @returns {(*|null)} returns the value of the removed item 
+   * @returns {(?*)} returns the value of the removed item 
    */
   // removes first element in the list if their value matches the passed one
   // if the second arg is passed, it will remove that number of matches
@@ -194,6 +194,9 @@ class SinglyLinkedList {
     }
     return false;
   }
+  /**
+   * @returns {SinglyLinkedList} returns the clone of the list
+   */
   clone() {
     let newList = new SinglyLinkedList();
     this.forEach((element) => {

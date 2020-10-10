@@ -1,6 +1,10 @@
 import { BSTNode } from './BSTNode.js';
 import { Queue } from './Queue.js';
 
+/**
+ * @typedef {string} TRAVERSAL
+ * @enum {TRAVERSAL}
+ */
 const TRAVERSAL = {
   DFS: {
     INORDER: 'inorder',
@@ -9,7 +13,10 @@ const TRAVERSAL = {
   },
   BFS: 'bfs',
 };
-
+/**
+ * @param {Node} currentNode 
+ * @param {Node} node 
+ */
 const insertNode = (currentNode, node) => {
   if (currentNode.value > node.value) {
     if (currentNode.left === null) {
@@ -28,8 +35,11 @@ const insertNode = (currentNode, node) => {
   }
 };
 
+/**
+ * @param {Node} node 
+ * @param {number} value 
+ */
 const findNode = (node, value) => {
-  // console.log(node);
   // empty tree
   if (node === null) {
     return null;
@@ -40,7 +50,6 @@ const findNode = (node, value) => {
   if (node.value < value) {
     return findNode(node.right, value);
   }
-  // console.log(`Found ${node.value}`);
   return node;
 };
 
@@ -48,6 +57,9 @@ class BinarySearchTree {
   constructor() {
     this.root = null;
   }
+  /**
+   * @param {number} value 
+   */
   insert(value) {
     const node = new BSTNode(value);
 
@@ -60,6 +72,10 @@ class BinarySearchTree {
       insertNode(this.root, node);
     }
   }
+  /**
+   * @param {number} value
+   * @returns {?Node}
+   */
   remove(value) {
     const removeNode = (node, value) => {
       if (node === null) {
@@ -107,6 +123,10 @@ class BinarySearchTree {
     // invoke the remove fn
     this.root = removeNode(this.root, value);
   }
+  /**
+   * @param {number=} value 
+   * @returns {number}
+   */
   getDepth(value = this.root.value) {
     const getDepthBST = (node = this.root) => {
       if (node === null) {
@@ -131,6 +151,9 @@ class BinarySearchTree {
     }
     return getDepthBST();
   }
+  /**
+   * @param {Number=} value 
+   */
   getHeight(value = this.root.value) {
     let node = this.find(value);
     const getHeightRec = (node) => {
@@ -144,7 +167,11 @@ class BinarySearchTree {
     };
     return getHeightRec(node);
   }
-  // default print BFS -> optional DFS
+  /**
+   * default print BFS -> optional DFS
+   * @param {TRAVERSAL=} method
+   * @param {Node=} currentNode
+   */
   print(method = 'bfs', currentNode = this.root) {
     switch (method) {
       // left sub -> root -> right sub
@@ -206,6 +233,10 @@ class BinarySearchTree {
         break;
     }
   }
+  /**
+   * @param {number} value
+   * @returns {BinarySearchTree} returns copy of a tree of a subtree if given a value
+   */
   clone(value = this.root.value) {
     let currentNode;
     // if an optional value has been passed, find the matching node
@@ -236,15 +267,27 @@ class BinarySearchTree {
     }
     return newTree;
   }
+  /**
+   * @param {number} value
+   * @returns {Node} 
+   */
   find(value) {
     return findNode(this.root, value);
   }
+  /**
+   * @param {Node=} node
+   * @returns {Node} 
+   */
   getMinNode(node = this.root) {
     while (node.left) {
       node = node.left;
     }
     return node;
   }
+  /**
+   * @param {Node=} node
+   * @returns {Node} 
+   */
   getMaxNode(node = this.root) {
     while (node.right) {
       node = node.right;

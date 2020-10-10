@@ -3,18 +3,27 @@ class Stack {
     this.data = [];
     this.top = -1;
   }
+  /**
+   * @param {*} element 
+   */
   push(element) {
     this.data[++this.top] = element;
   }
+  /**
+   * @returns {?*}
+   */
   pop() {
     if (this.isEmpty()) {
-      return console.log('Nothing to pop');
+      console.log('Nothing to pop');
+      return null;
     }
     --this.top;
     return this.data.pop();
   }
-  // returns index of an element that matches the value
-  // not the most elegant solution ._.
+  /**
+   * @param {*} value
+   * @returns {?number} returns index of an element that matches the value 
+   */
   getIndex(value) {
     let i = -1;
     this.data.forEach((element, j) => {
@@ -23,10 +32,14 @@ class Stack {
       }
     });
     if (i === -1) {
-      return console.log('No elments match the value given');
+      console.log('No elments match the value given');
+      return null;
     }
     return i;
   }
+  /**
+   * @returns {*}
+   */
   peek() {
     if (this.isEmpty()) {
       return console.log('Empty stack');
@@ -43,6 +56,9 @@ class Stack {
       });
     this.data = reverseArr;
   }
+  /**
+   * @returns {boolean}
+   */
   isEmpty() {
     // is it an array and does it have any elements
     if (Array.isArray(this.data) && this.data.length) {
@@ -50,9 +66,15 @@ class Stack {
     }
     return true;
   }
+  /**
+   * @returns {number}
+   */
   length() {
     return this.data.length;
   }
+  /**
+   * @returns {Stack}
+   */
   clone() {
     let newStack = new Stack();
     this.data.forEach((element) => {
