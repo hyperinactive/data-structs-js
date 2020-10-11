@@ -4,6 +4,9 @@ class MinHeap extends Heap {
   constructor(size) {
     super(size);
   }
+  /**
+   * @param {number} node 
+   */
   insert(node) {
     // if there is no more room in the heap
     if (super.getSize() >= super.maxSize) {
@@ -28,35 +31,47 @@ class MinHeap extends Heap {
     }
     this.nodeCount++;
   }
-  minHeap() {
-    for (let i = this.heap.length / 2; i >= 1; i--) {
+  /**
+   * @param {number} index 
+   */
+  minHeapify(index) {
+    let min = index;
+    const left = super.getLeftChild(index);
+    const right = super.getRightChild(index);
+
+    // if a left child exists and is greater than parent max -> left
+    if (this.heap[left] && this.heap[left] < this.heap[min]) {
+      min = super.getLeftChild(index);
+    }
+    if (this.heap[right] && this.heap[right] < this.heap[min]) {
+      min = super.getRightChild(index);
+    }
+    // if max has changed -> we have a larger child -> swap
+    if (min !== index) {
+      super.swap(min, index);
+      this.minHeapify(min);
+    }
+  }
+  heapify() {
+    // heapify from the last non leaf node
+    for (let i = Math.round(this.getSize() / 2 - 1); i >= 0; i--) {
       this.minHeapify(i);
     }
   }
-  // heapify the heap
-  minHeapify(index) {
-    // exit -> node isn't a leaf
-    // node greater than its children?
-    if (super.isLeaf(index)) {
-      if (
-        this.heap[index] > this.heap[super.getRightChild(index)] ||
-        this.heap[index] > this.heap[super.getLeftChild(index)]
-      ) {
-        // swap with the left child if greater -> continue to heapify
-        this.swap(index, super.getLetChild(index));
-        this.minHeapify(super.getLetChild(index));
-      } else {
-        // else swap with the right child -> continue to heapify
-        this.swap(index, super.getRightChild(index));
-        this.minHeapify(super.getRightChild(index));
-      }
+  /**
+   * @param {number} value
+   * @returns {?number} 
+   */
+  remove(value) {
+    if (this.heap.indexOf(value) === -1) {
+      console.log('No such element exists');
+      return null;
     }
-  }
-  remove() {
-    this.swap(0, this.heap.length - 1);
-    let removed = this.heap.pop();
+    const index = this.heap.indexOf(value);
+    this.swap(index, this.heap.length - 1);
+    const removed = this.heap.pop();
     this.nodeCount--;
-    this.minHeapify(0);
+    this.heapify();
     return removed;
   }
   print() {

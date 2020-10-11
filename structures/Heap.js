@@ -18,18 +18,18 @@ class Heap {
   getParent(index) {
     return Math.floor(index / 2);
   }
-  getLetChild(index) {
-    return index * 2;
+  getLeftChild(index) {
+    return index * 2 + 1;
   }
   getRightChild(index) {
-    return index * 2 + 1;
+    return index * 2 + 2;
   }
   // basically, node is a leaf if it's located in the second half of the array
   isLeaf(index) {
     return index >= this.getSize() / 2 && index <= this.getSize();
   }
   swap(x, y) {
-    let tmp = this.heap[x];
+    const tmp = this.heap[x];
     this.heap[x] = this.heap[y];
     this.heap[y] = tmp;
   }

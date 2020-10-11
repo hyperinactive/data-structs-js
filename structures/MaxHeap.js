@@ -4,6 +4,9 @@ class MaxHeap extends Heap {
   constructor(size) {
     super(size);
   }
+  /**
+   * @param {number} node 
+   */
   insert(node) {
     // if there is no more room in the heap
     if (super.getSize() >= super.maxSize) {
@@ -27,6 +30,49 @@ class MaxHeap extends Heap {
       currentNode = super.getParent(currentNode);
     }
     this.nodeCount++;
+  }
+  /**
+   * @param {number} index 
+   */
+  maxHeapify(index) {
+    let max = index;
+    const left = super.getLeftChild(index);
+    const right = super.getRightChild(index);
+
+    // if a left child exists and is greater than parent max -> left
+    if (this.heap[left] && this.heap[left] > this.heap[max]) {
+      max = super.getLeftChild(index);
+    }
+    if (this.heap[right] && this.heap[right] > this.heap[max]) {
+      max = super.getRightChild(index);
+    }
+    // if max has changed -> we have a larger child -> swap
+    if (max !== index) {  
+      super.swap(max, index);
+      this.maxHeapify(max);
+    }
+  }
+  heapify() {
+    // heapify from the last non leaf node
+    for (let i = Math.round(this.getSize() / 2 - 1); i >= 0; i--) {
+      this.maxHeapify(i);
+    }
+  }
+  /**
+   * @param {number} value
+   * @returns {?number} 
+   */
+  remove(value) {
+    if (this.heap.indexOf(value) === -1) {
+      console.log('No such element exists');
+      return null;
+    }
+    const index = this.heap.indexOf(value);
+    this.swap(index, this.heap.length - 1);
+    const removed =  this.heap.pop();
+    this.nodeCount--;
+    this.heapify();
+    return removed;
   }
   print() {
     super.print();
