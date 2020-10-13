@@ -1,17 +1,23 @@
 import { Heap } from './Heap.js';
 
 class MaxHeap extends Heap {
-  constructor(size) {
-    super(size);
+  /**
+   * @param {number|Array} arg
+   */
+  constructor(arg) {
+    // if a number is passed create a fixed size heap
+    if (arg === null) super();
+    // if an array is passed, heapify it
+    if (arg instanceof Array) {
+      this.heap = arg;
+      this.nodeCount = arg.length;
+      this.heapify();
+    }
   }
   /**
-   * @param {number} node 
+   * @param {number} node
    */
   insert(node) {
-    // if there is no more room in the heap
-    if (super.getSize() >= super.maxSize) {
-      return;
-    }
     // if the heap is empty or the root node is greater than the new one -> insert at the beginning
     if (super.getSize() === 0) {
       this.heap.push(node);
@@ -32,7 +38,7 @@ class MaxHeap extends Heap {
     this.nodeCount++;
   }
   /**
-   * @param {number} index 
+   * @param {number} index
    */
   maxHeapify(index) {
     let max = index;
@@ -47,7 +53,7 @@ class MaxHeap extends Heap {
       max = super.getRightChild(index);
     }
     // if max has changed -> we have a larger child -> swap
-    if (max !== index) {  
+    if (max !== index) {
       super.swap(max, index);
       this.maxHeapify(max);
     }
@@ -60,7 +66,7 @@ class MaxHeap extends Heap {
   }
   /**
    * @param {number} value
-   * @returns {?number} 
+   * @returns {?number}
    */
   remove(value) {
     if (this.heap.indexOf(value) === -1) {
@@ -69,7 +75,7 @@ class MaxHeap extends Heap {
     }
     const index = this.heap.indexOf(value);
     this.swap(index, this.heap.length - 1);
-    const removed =  this.heap.pop();
+    const removed = this.heap.pop();
     this.nodeCount--;
     this.heapify();
     return removed;

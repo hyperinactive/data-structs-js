@@ -1,17 +1,23 @@
 import { Heap } from './Heap.js';
 
 class MinHeap extends Heap {
-  constructor(size) {
-    super(size);
+  /**
+   * @param {number|Array} arg 
+   */
+  constructor(arg) {
+    // if a number is passed create a fixed size heap
+    if (arg === null) super();
+    // if an array is passed, heapify it
+    if (arg instanceof Array) {
+      this.heap = arg;
+      this.nodeCount = arg.length;
+      this.heapify();
+    }
   }
   /**
    * @param {number} node 
    */
   insert(node) {
-    // if there is no more room in the heap
-    if (super.getSize() >= super.maxSize) {
-      return;
-    }
     // if the heap is empty or the root node is greater than the new one -> insert at the beginning
     if (super.getSize() === 0) {
       this.heap.push(node);

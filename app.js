@@ -17,4 +17,3 @@ import {
 // import * as datastructs from './dataStructures.js';
 
 /* work with the imported strctures */
-
