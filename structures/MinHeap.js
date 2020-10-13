@@ -2,7 +2,7 @@ import { Heap } from './Heap.js';
 
 class MinHeap extends Heap {
   /**
-   * @param {number|Array} arg 
+   * @param {?Array} arg 
    */
   constructor(arg) {
     // if a number is passed create a fixed size heap
