@@ -186,4 +186,4 @@ class HashTable {
   }
 }
 
-export { HashTable };
+module.exports = HashTable;

@@ -6,3 +6,8 @@ todoDocumentation.txt
 index.html
 test.js
 app.js
+server.js
+
+#node modules
+node_modules
+

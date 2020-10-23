@@ -74,4 +74,4 @@ class Queue {
   }
 }
 
-export { Queue };
+module.exports = Queue;

@@ -1,4 +1,4 @@
-import { Heap } from './Heap.js';
+const Heap = require('./Heap');
 
 class MaxHeap extends Heap {
   /**
@@ -84,4 +84,5 @@ class MaxHeap extends Heap {
     super.print();
   }
 }
-export { MaxHeap };
+
+module.exports = MaxHeap;

@@ -10,4 +10,4 @@ class BSTNode {
   }
 }
 
-export { BSTNode };
+module.exports = BSTNode;

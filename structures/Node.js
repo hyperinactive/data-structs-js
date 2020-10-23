@@ -6,4 +6,4 @@ class Node {
   }
 }
 
-export { Node };
+module.exports = Node;

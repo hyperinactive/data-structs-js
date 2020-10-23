@@ -65,4 +65,4 @@ class Heap {
   }
 }
 
-export { Heap };
+module.exports = Heap;

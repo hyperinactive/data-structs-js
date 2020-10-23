@@ -1,4 +1,4 @@
-import { Node } from './Node.js';
+const Node = require('./Node');
 
 class DoublyLinkedList {
   constructor() {
@@ -170,4 +170,4 @@ class DoublyLinkedList {
   }
 }
 
-export { DoublyLinkedList };
+module.exports = DoublyLinkedList;

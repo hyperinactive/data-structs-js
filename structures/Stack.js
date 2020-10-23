@@ -4,7 +4,7 @@ class Stack {
     this.top = -1;
   }
   /**
-   * @param {*} element 
+   * @param {*} element
    */
   push(element) {
     this.data[++this.top] = element;
@@ -22,7 +22,7 @@ class Stack {
   }
   /**
    * @param {*} value
-   * @returns {?number} returns index of an element that matches the value 
+   * @returns {?number} returns index of an element that matches the value
    */
   getIndex(value) {
     let i = -1;
@@ -92,4 +92,4 @@ class Stack {
   }
 }
 
-export { Stack };
+module.exports = Stack;

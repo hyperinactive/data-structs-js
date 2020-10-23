@@ -1,5 +1,5 @@
-import { Node } from './Node.js';
-import { SinglyLinkedList } from './SinglyLinkedList.js';
+const Node = require('./Node');
+const SinglyLinkedList = require('./SinglyLinkedList');
 
 const hashFirst = (value, mapSize) => {
   if (typeof value === 'string') {
@@ -166,4 +166,4 @@ class HashMap {
   }
 }
 
-export { HashMap };
+module.exports = HashMap;

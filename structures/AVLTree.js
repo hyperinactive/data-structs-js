@@ -1,4 +1,4 @@
-import { BinarySearchTree } from './BinarySearchTree.js';
+const BinarySearchTree = require('./BinarySearchTree');
 
 // use the already made functions from the BST
 class AVLTree extends BinarySearchTree {
@@ -144,4 +144,4 @@ class AVLTree extends BinarySearchTree {
   }
 }
 
-export { AVLTree };
+module.exports = AVLTree;

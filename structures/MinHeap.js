@@ -1,4 +1,4 @@
-import { Heap } from './Heap.js';
+const Heap = require('./Heap');
 
 class MinHeap extends Heap {
   /**
@@ -84,4 +84,5 @@ class MinHeap extends Heap {
     super.print();
   }
 }
-export { MinHeap };
+
+module.exports = MinHeap;

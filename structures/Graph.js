@@ -1,4 +1,4 @@
-import { Queue } from './Queue.js';
+const Queue = require('./Queue');
 
 class Graph {
   constructor() {
@@ -66,7 +66,7 @@ class Graph {
     return false;
   }
   /**
-   * @returns {number} number of edges removed 
+   * @returns {number} number of edges removed
    */
   removeAllEdges(fromKey) {
     if (!this.vertices.has(fromKey)) {
@@ -90,7 +90,7 @@ class Graph {
    * check its edges for new vertices
    * enqueue the found vertices (if unvisited) and dequeue the current vertex
    * repeat for each vertex in the graph
-   * 
+   *
    * @param {*} source a vertex from which the bfs starts off
    * @param {function} callback a function to be called for each vertex
    */
@@ -143,7 +143,7 @@ class Graph {
    * search as far as the edges go
    * with every node call the function to search further
    * when done with the node mark it as visited
-   * 
+   *
    * @param {*} source a vertex from which the bfs starts off
    * @param {function} callback a function to be called for each vertex
    */
@@ -171,7 +171,7 @@ class Graph {
     dfsRec(source, visited);
   }
   /**
-   * @param {*} source 
+   * @param {*} source
    */
   printDFS(source) {
     this.dfs(source, (element) => {
@@ -179,7 +179,7 @@ class Graph {
     });
   }
   /**
-   * @param {*} source 
+   * @param {*} source
    */
   printBFS(source) {
     this.bfs(source, (element) => {
@@ -226,4 +226,4 @@ class Graph {
   }
 }
 
-export { Graph };
+module.exports = Queue;

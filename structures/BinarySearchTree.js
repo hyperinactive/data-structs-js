@@ -1,5 +1,5 @@
-import { BSTNode } from './BSTNode.js';
-import { Queue } from './Queue.js';
+const BSTNode = require('./BSTNode');
+const Queue = require('./Queue');
 
 /**
  * @typedef {string} TRAVERSAL
@@ -296,4 +296,4 @@ class BinarySearchTree {
   }
 }
 
-export { BinarySearchTree };
+module.exports = BinarySearchTree;
