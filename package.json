@@ -1,5 +1,5 @@
 {
-  "name": "@hyperinactive/data-structs",
+  "name": "@hyperinactive/data-structs-js",
   "version": "1.1.6",
   "description": "Implementation of common data structures into Javascript",
   "main": "app.js",
@@ -24,6 +24,6 @@
   },
   "dependencies": {},
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/hyperinactive"
   }
 }
