@@ -1,5 +1,8 @@
+#data-structs-js
+
 Implementation of common data structures into Javascript.
-Structures included in the package:
+
+## Structures included in the package:
 
 - Stack
 - Queue
@@ -12,3 +15,15 @@ Structures included in the package:
 - Min heap
 - Max heap
 - Graph
+
+## Instalation
+
+```bash
+placeholder
+```
+
+## Usage
+
+```bash
+placeholder
+```
