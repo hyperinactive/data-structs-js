@@ -3,7 +3,7 @@
 Implementation of common data structures into Javascript.
 
 ## Structures included in the package:
-
+```bash
 - Stack
 - Queue
 - Singly linked list
@@ -15,15 +15,18 @@ Implementation of common data structures into Javascript.
 - Min heap
 - Max heap
 - Graph
+```
 
 ## Instalation
 
 ```bash
-placeholder
+npm install @hyperinactive/data-strcuts-js
 ```
 
 ## Usage
 
 ```bash
-placeholder
+Simply import a data structure from the module
+
+e.g. const { Stack } = require('@hyperinactive/data-structs-js');
 ```

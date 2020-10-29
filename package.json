@@ -1,8 +1,8 @@
 {
   "name": "@hyperinactive/data-structs-js",
-  "version": "1.1.6",
+  "version": "1.1.9",
   "description": "Implementation of common data structures into Javascript",
-  "main": "app.js",
+  "main": "data-structs-js",
   "keywords": [
     "data-structs",
     "data",
@@ -22,8 +22,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/hyperinactive"
-  }
+  "dependencies": {}
 }
