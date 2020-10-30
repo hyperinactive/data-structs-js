@@ -84,7 +84,7 @@ class Graph {
     return i;
   }
   /**
-   * traverse the graph using the breadth first search algh
+   * traverse the graph using the breadth first search alg
    * store the vertices and mark them as unvisited
    * start from the source vertex
    * check its edges for new vertices
